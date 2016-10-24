@@ -1,0 +1,28 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:plone="http://namespaces.plone.org/plone">
+
+    <plone:contenttype
+      	portal_type="User"
+      	schema=".content.users.IUser"
+      	class=".content.users.User"
+    />
+    <plone:contenttype
+      	portal_type="UserManager"
+      	schema=".content.users.IUserManager"
+      	class=".content.users.UserManager"
+        behaviors="plone.server.behaviors.dublincore.IDublinCore"
+    />
+
+    <plone:contenttype
+      	portal_type="Group"
+      	schema=".content.groups.IGroup"
+      	class=".content.groups.Group"
+    />
+    <plone:contenttype
+      	portal_type="GroupManager"
+      	schema=".content.groups.IGroupManager"
+      	class=".content.groups.GroupManager"
+        behaviors="plone.server.behaviors.dublincore.IDublinCore"
+    />
+
+</configure>

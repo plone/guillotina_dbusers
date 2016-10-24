@@ -1,0 +1,28 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
+           i18n_domain="cmf_default">
+
+  <include file="meta.zcml" package="zope.security" />
+  <include file="meta.zcml" package="zope.securitypolicy" />
+
+  <permission
+      id="plone.AddUser"
+      title="Add plone user"
+      />
+
+  <permission
+      id="plone.AddGroup"
+      title="Add plone group"
+      />
+
+  <grant
+      permission="plone.AddUser"
+      role="plone.SiteAdmin"
+      />
+
+  <grant
+      permission="plone.AddGroup"
+      role="plone.SiteAdmin"
+      />
+
+</configure>

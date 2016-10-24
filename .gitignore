@@ -1,0 +1,9 @@
+*.pyc
+.eggs
+__pycache__
+*.egg-info
+.cache
+extras
+include
+lib
+pip-selfcheck.json

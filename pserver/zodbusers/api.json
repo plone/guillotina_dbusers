@@ -1,0 +1,20 @@
+{
+	"methods": {
+		"POST": "plone.server.interfaces.IPOST"
+	},
+	"layer": "pserver.zodbusers.interfaces.IZODBUsersLayer",
+	"contenttypes": {
+		"pserver.zodbusers.content.users.IUserManager": {
+			"POST": {
+        "factory": "pserver.zodbusers.services.users.POSTUser",
+				"permission": "plone.AddUser"
+      }
+    },
+		"pserver.zodbusers.content.groups.IGroupManager": {
+			"POST": {
+        "factory": "plone.server.api.dexterity.DefaultPOST",
+        "permission": "plone.AddGroup"
+      }
+    }
+	}
+}
