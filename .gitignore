@@ -5,5 +5,5 @@ __pycache__
 .cache
 extras
 include
-lib
+/lib
 pip-selfcheck.json

@@ -31,7 +31,24 @@ class IUser(IItem):
 
 @implementer(IUser)
 class User(Item):
-    pass
+
+    @property
+    def _roles(self):
+        # XXX needs implementation...
+        return {
+            'plone.SiteAdmin': 1,
+            'plone.SiteDeleter': 1,
+            'plone.Owner': 1,
+            'plone.Anonymous': 0
+        }
+
+    @property
+    def _groups(self):
+        return []
+
+    @property
+    def _properties(self):
+        return {}
 
 
 @implementer(IUserManager)

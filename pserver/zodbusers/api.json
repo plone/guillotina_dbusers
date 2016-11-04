@@ -15,6 +15,16 @@
         "factory": "plone.server.api.dexterity.DefaultPOST",
         "permission": "plone.AddGroup"
       }
-    }
+    },
+		"plone.server.interfaces.IPloneSite": {
+      "endpoints": {
+        "@login": {
+          "POST": {
+            "factory": "pserver.zodbusers.services.login.Login",
+            "permission": "plone.AccessContent"
+          }
+        }
+			}
+		}
 	}
 }
