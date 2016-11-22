@@ -1,16 +1,16 @@
 # -*- encoding: utf-8 -*-
-from plone.server.content import Item
-from plone.server.interfaces import IItem
-from zope.interface import implementer
-from zope import schema
+from plone.server.content import Folder
+from plone.server.interfaces import IContainer
 from pserver.zodbusers import _
+from zope import schema
+from zope.interface import implementer
 
 
-class IUserManager(IItem):
+class IUserManager(IContainer):
     pass
 
 
-class IUser(IItem):
+class IUser(IContainer):
 
     username = schema.TextLine(
         title=_('Username'),
@@ -28,23 +28,42 @@ class IUser(IItem):
         title=_('Username'),
         required=False)
 
+    groups = schema.List(
+        title=_('Groups'),
+        value_type=schema.TextLine(),
+        required=False
+    )
+
+    roles = schema.List(
+        title=_('Roles'),
+        value_type=schema.TextLine(),
+        required=False
+    )
+
 
 @implementer(IUser)
-class User(Item):
+class User(Folder):
+    username = email = name = password = groups = roles = None
+
+    # @property
+    # def password(self):
+    #     return self._password
+    #
+    # @password.setter
+    # def set_password(self, value):
+    #     # this is going to be a raw password...
+    #     self._password = value
 
     @property
     def _roles(self):
-        # XXX needs implementation...
-        return {
-            'plone.SiteAdmin': 1,
-            'plone.SiteDeleter': 1,
-            'plone.Owner': 1,
-            'plone.Anonymous': 0
-        }
+        roles = {}
+        for role in getattr(self, 'roles', []) or []:
+            roles[role] = 1
+        return roles
 
     @property
     def _groups(self):
-        return []
+        return getattr(self, 'groups', []) or []
 
     @property
     def _properties(self):
@@ -52,5 +71,5 @@ class User(Item):
 
 
 @implementer(IUserManager)
-class UserManager(Item):
+class UserManager(Folder):
     pass

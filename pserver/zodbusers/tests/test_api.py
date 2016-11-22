@@ -21,12 +21,34 @@ class TestContent(PserverZODBUsersTestCase):
             })
         )
         self.assertEquals(resp.status_code, 201)
-        self.assertTrue('foobar' in self.layer.portal['users'])
 
-        # test auth
-        resp = self.layer.requester(
-            'DELETE',
+        # required because portal object layer has is stale
+        site = self.get_portal()
+        self.assertTrue('foobar' in site['users'])
+
+    def test_user_auth(self):
+        self.layer.requester(
+            'POST',
+            '/plone/plone/users',
+            data=json.dumps({
+                "@type": "User",
+                "name": "Foobar",
+                "id": "foobar",
+                "username": "foobar",
+                "email": "foo@bar.com",
+                "password": "password"
+            })
+        )
+        # user should be able to add content to object
+        self.layer.requester(
+            'POST',
             '/plone/plone/users/foobar',
+            data=json.dumps({
+                "@type": "Item",
+                "id": "foobar",
+                "title": "foobar"
+            }),
             token=base64.b64encode(b'foobar:password').decode('ascii')
         )
-        self.assertTrue('foobar' not in self.layer.portal['users'])
+        site = self.get_portal()
+        self.assertTrue('foobar' not in site['users']['foobar'])

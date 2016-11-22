@@ -1,0 +1,18 @@
+{
+	"databases": [
+		{
+		"zodb": {
+			"storage": "ZODB",
+			"path": "Data.fs"
+		}
+	}],
+	"address": 8080,
+	"static": [
+		{"favicon.ico": "static/favicon.ico"}
+	],
+	"creator": {
+		"admin": "admin",
+		"password": "YWRtaW4="
+	},
+	"utilities": []
+}

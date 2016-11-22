@@ -5,15 +5,15 @@ import unittest
 import json
 
 
-class PserverZODBUsersLayer(PloneBaseLayer):
+class PserverZODBUsersTestCase(unittest.TestCase):
+    ''' Adding the OAuth utility '''
+    layer = PloneBaseLayer
 
-    @classmethod
-    def setUp(cls):
-        cls.requester('POST', '/plone/plone/@addons', data=json.dumps({
+    def setUp(self):
+        self.layer.requester('POST', '/plone/plone/@addons', data=json.dumps({
             "id": "zodbusers"
         }))
 
-
-class PserverZODBUsersTestCase(unittest.TestCase):
-    ''' Adding the OAuth utility '''
-    layer = PserverZODBUsersLayer
+    def get_portal(self):
+        root = self.layer.new_root()
+        return root['plone']

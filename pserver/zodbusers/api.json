@@ -6,17 +6,17 @@
 	"contenttypes": {
 		"pserver.zodbusers.content.users.IUserManager": {
 			"POST": {
-        "factory": "pserver.zodbusers.services.users.POSTUser",
+        "factory": "plone.server.api.content.DefaultPOST",
 				"permission": "plone.AddUser"
       }
     },
 		"pserver.zodbusers.content.groups.IGroupManager": {
 			"POST": {
-        "factory": "plone.server.api.dexterity.DefaultPOST",
+        "factory": "plone.server.api.content.DefaultPOST",
         "permission": "plone.AddGroup"
       }
     },
-		"plone.server.interfaces.IPloneSite": {
+		"plone.server.interfaces.ISite": {
       "endpoints": {
         "@login": {
           "POST": {

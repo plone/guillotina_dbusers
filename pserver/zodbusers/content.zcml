@@ -11,6 +11,7 @@
       	schema=".content.users.IUserManager"
       	class=".content.users.UserManager"
         behaviors="plone.server.behaviors.dublincore.IDublinCore"
+        allowed_types="User"
     />
 
     <plone:contenttype
@@ -23,6 +24,7 @@
       	schema=".content.groups.IGroupManager"
       	class=".content.groups.GroupManager"
         behaviors="plone.server.behaviors.dublincore.IDublinCore"
+        allowed_types="Group"
     />
 
 </configure>

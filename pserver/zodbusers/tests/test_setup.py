@@ -5,7 +5,8 @@ from pserver.zodbusers.testing import PserverZODBUsersTestCase
 class TestContent(PserverZODBUsersTestCase):
 
     def test_content(self):
+        site = self.get_portal()
         self.assertEqual(
-            self.layer.portal['users'].portal_type, 'UserManager')
+            site['users'].portal_type, 'UserManager')
         self.assertEqual(
-            self.layer.portal['groups'].portal_type, 'GroupManager')
+            site['groups'].portal_type, 'GroupManager')
