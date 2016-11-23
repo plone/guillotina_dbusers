@@ -41,10 +41,18 @@ class IUser(IContainer):
         required=False
     )
 
+    disabled = schema.Bool(
+        title=_('Disabled'),
+        default=False
+    )
+
 
 @implementer(IUser)
 class User(Folder):
-    username = email = name = password = groups = roles = None
+    username = email = name = password = None
+    disabled = False
+    roles = ['plone.Member']
+    groups = []
 
     # @property
     # def password(self):

@@ -12,4 +12,6 @@ class ZODBUserIdentifier(object):
             return
 
         if token.get('id', '') in users:
-            return users[token.get('id', '')]
+            user = users[token.get('id', '')]
+            if not user.disabled:
+                return user

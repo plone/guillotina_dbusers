@@ -26,7 +26,7 @@ class IGroup(IContainer):
 @implementer(IGroup)
 class Group(Folder):
     name = None
-    roles = None
+    roles = []
 
     @property
     def roles(self):
