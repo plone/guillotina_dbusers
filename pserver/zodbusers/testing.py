@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from plone.server.testing import PloneBaseLayer
+from plone.server.testing import PloneBaseLayer, TESTING_SETTINGS
 import unittest
 import json
+
+
+TESTING_SETTINGS["auth_user_identifiers"] = [
+    "pserver.zodbusers.users.ZODBUserIdentifier"
+]
 
 
 class PserverZODBUsersTestCase(unittest.TestCase):

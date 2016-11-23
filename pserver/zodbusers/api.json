@@ -20,7 +20,13 @@
       "endpoints": {
         "@login": {
           "POST": {
-            "factory": "pserver.zodbusers.services.login.Login",
+            "factory": "pserver.zodbusers.services.auth.Login",
+            "permission": "plone.AccessContent"
+          }
+        },
+				"@refresh_token": {
+          "POST": {
+            "factory": "pserver.zodbusers.services.auth.Login",
             "permission": "plone.AccessContent"
           }
         }

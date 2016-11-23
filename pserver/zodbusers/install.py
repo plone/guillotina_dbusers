@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 from plone.server.addons import Addon
 from plone.server.content import createContentInContainer
-from plone.server import AUTH_EXTRACTION_PLUGINS
 from plone.server.registry import ILayers
 from plone.server.utils import get_authenticated_user_id
-from pserver.zodbusers.participation import ExtractionPlugin
 
 
-AUTH_EXTRACTION_PLUGINS.append(ExtractionPlugin)
 USERS_LAYER = 'pserver.zodbusers.interfaces.IZODBUsersLayer'
 
 

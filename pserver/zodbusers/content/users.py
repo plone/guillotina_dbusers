@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from BTrees.OOBTree import OOBTree
 from plone.server.content import Folder
 from plone.server.interfaces import IContainer
 from pserver.zodbusers import _
@@ -21,11 +22,11 @@ class IUser(IContainer):
         required=False)
 
     name = schema.TextLine(
-        title=_('Username'),
+        title=_('Name'),
         required=False)
 
     password = schema.TextLine(
-        title=_('Username'),
+        title=_('Password'),
         required=False)
 
     groups = schema.List(
@@ -72,4 +73,6 @@ class User(Folder):
 
 @implementer(IUserManager)
 class UserManager(Folder):
-    pass
+    def __init__(self, id_=None):
+        super().__init__(id_)
+        self.username_mapping = OOBTree()

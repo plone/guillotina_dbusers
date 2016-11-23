@@ -52,3 +52,28 @@ class TestContent(PserverZODBUsersTestCase):
         )
         site = self.get_portal()
         self.assertTrue('foobar' not in site['users']['foobar'])
+
+    def test_login(self):
+        # add user...
+        self.layer.requester(
+            'POST',
+            '/plone/plone/users',
+            data=json.dumps({
+                "@type": "User",
+                "name": "Foobar",
+                "id": "foobar",
+                "username": "foobar",
+                "email": "foo@bar.com",
+                "password": "password"
+            })
+        )
+
+        resp = self.layer.requester(
+            'POST',
+            '/plone/plone/@login',
+            data=json.dumps({
+                "username": "foobar",
+                "password": "password"
+            })
+        )
+        self.assertEquals(resp.status_code, 200)

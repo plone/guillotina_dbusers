@@ -13,4 +13,9 @@
   <include file="permissions.zcml" />
   <include file="services/configure.zcml" />
 
+  <subscriber
+      for="pserver.zodbusers.content.users.IUser
+           plone.server.interfaces.IObjectFinallyCreatedEvent"
+      handler=".subscribers.user_created" />
+
 </configure>

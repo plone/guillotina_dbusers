@@ -10,9 +10,11 @@
 	"static": [
 		{"favicon.ico": "static/favicon.ico"}
 	],
-	"creator": {
-		"admin": "admin",
-		"password": "YWRtaW4="
+	"root_user": {
+		"password": "admin"
 	},
-	"utilities": []
+	"utilities": [],
+	"auth_user_identifiers": [
+		"pserver.zodbusers.users.ZODBUserIdentifier"
+	]
 }
