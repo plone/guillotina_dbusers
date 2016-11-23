@@ -64,7 +64,8 @@ class TestContent(PserverZODBUsersTestCase):
                 "id": "foobar",
                 "username": "foobar",
                 "email": "foo@bar.com",
-                "password": "password"
+                "password": "password",
+                "groups": ["Managers"]
             })
         )
 
@@ -77,3 +78,45 @@ class TestContent(PserverZODBUsersTestCase):
             })
         )
         self.assertEquals(resp.status_code, 200)
+
+        # test using new auth token
+        resp = self.layer.requester(
+            'GET', '/plone/plone/@addons',
+            token=json.loads(resp.content.decode('utf-8'))['token'],
+            auth_type='Bearer'
+        )
+        assert resp.status_code == 200
+
+    def test_refresh(self):
+        # add user...
+        self.layer.requester(
+            'POST',
+            '/plone/plone/users',
+            data=json.dumps({
+                "@type": "User",
+                "name": "Foobar",
+                "id": "foobar",
+                "username": "foobar",
+                "email": "foo@bar.com",
+                "password": "password",
+                "groups": ["Managers"]
+            })
+        )
+
+        resp = self.layer.requester(
+            'POST',
+            '/plone/plone/@login',
+            data=json.dumps({
+                "username": "foobar",
+                "password": "password"
+            })
+        )
+        self.assertEquals(resp.status_code, 200)
+
+        resp = self.layer.requester(
+            'POST', '/plone/plone/@refresh_token',
+            token=json.loads(resp.content.decode('utf-8'))['token'],
+            auth_type='Bearer'
+        )
+        assert resp.status_code == 200
+        assert 'token' in json.loads(resp.content.decode('utf-8'))
