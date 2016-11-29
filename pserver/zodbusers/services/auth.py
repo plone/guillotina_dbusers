@@ -23,12 +23,14 @@ class Login(Service):
         if user is None:
             return UnauthorizedResponse('login failed')
 
-        jwt_token = jwt.encode({
+        data = {
             'exp': datetime.utcnow() + timedelta(seconds=self.token_timeout),
             'id': user.id
-        }, app_settings['jwt']['secret']).decode('utf-8')
+        }
+        jwt_token = jwt.encode(data, app_settings['jwt']['secret']).decode('utf-8')
 
         return {
+            'exp': data['exp'],
             'token': jwt_token
         }
 
@@ -39,10 +41,12 @@ class Refresh(Login):
         if user is None:
             return UnauthorizedResponse('user not authorized')
 
-        jwt_token = jwt.encode({
+        data = {
             'exp': datetime.utcnow() + timedelta(seconds=self.token_timeout),
             'id': user.id
-        }, app_settings['jwt']['secret']).decode('utf-8')
+        }
+        jwt_token = jwt.encode(data, app_settings['jwt']['secret']).decode('utf-8')
         return {
+            'exp': data['exp'],
             'token': jwt_token
         }

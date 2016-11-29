@@ -38,6 +38,9 @@ setup(
     entry_points={
         'plone.server': [
             'include = pserver.zodbusers',
+        ],
+        'console_scripts': [
+            'server = plone.server.server:main',
         ]
     }
 )
