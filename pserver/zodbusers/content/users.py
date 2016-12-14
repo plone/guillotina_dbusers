@@ -54,15 +54,6 @@ class User(Folder):
     roles = ['plone.Member']
     groups = []
 
-    # @property
-    # def password(self):
-    #     return self._password
-    #
-    # @password.setter
-    # def set_password(self, value):
-    #     # this is going to be a raw password...
-    #     self._password = value
-
     @property
     def _roles(self):
         roles = {}

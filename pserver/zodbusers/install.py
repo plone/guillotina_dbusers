@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.server.addons import Addon
-from plone.server.content import createContentInContainer
+from plone.server.content import create_content_in_container
 from plone.server.registry import ILayers
 from plone.server.utils import get_authenticated_user_id
 
@@ -13,21 +13,21 @@ class ZODBUsersAddon(Addon):
     @classmethod
     def install(self, request):
         registry = request.site_settings
-        registry.forInterface(ILayers).active_layers |= {
+        registry.for_interface(ILayers).active_layers |= {
             USERS_LAYER
         }
         user = get_authenticated_user_id(request)
-        createContentInContainer(
+        create_content_in_container(
             request.site, 'UserManager', 'users',
             creators=(user,), title='Users')
-        createContentInContainer(
+        create_content_in_container(
             request.site, 'GroupManager', 'groups',
             creators=(user,), title='Groups')
 
     @classmethod
     def uninstall(self, request):
         registry = request.site_settings
-        registry.forInterface(ILayers).active_layers -= {
+        registry.for_interface(ILayers).active_layers -= {
             USERS_LAYER
         }
         if 'users' in request.site:
