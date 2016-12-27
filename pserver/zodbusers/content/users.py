@@ -56,7 +56,9 @@ class User(Folder):
 
     @property
     def _roles(self):
-        roles = {}
+        roles = {
+            'plone.Authenticated': 1
+        }
         for role in getattr(self, 'roles', []) or []:
             roles[role] = 1
         return roles

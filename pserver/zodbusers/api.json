@@ -21,13 +21,19 @@
         "@login": {
           "POST": {
             "factory": "pserver.zodbusers.services.auth.Login",
-            "permission": "plone.AccessContent"
+            "permission": "plone.NotAuthenticated"
           }
         },
 				"@refresh_token": {
           "POST": {
             "factory": "pserver.zodbusers.services.auth.Refresh",
-            "permission": "plone.AccessContent"
+            "permission": "plone.Authenticated"
+          }
+        },
+				"@user_info": {
+          "GET": {
+            "factory": "pserver.zodbusers.services.users.Info",
+            "permission": "plone.Authenticated"
           }
         }
 			}

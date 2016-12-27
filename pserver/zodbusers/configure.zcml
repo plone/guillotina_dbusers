@@ -4,10 +4,28 @@
 
    <include package="zope.securitypolicy" file="meta.zcml" />
    <include package="zope.securitypolicy" />
+
    <grant
-     permission="plone.AccessContent"
-     role="plone.Anonymous"
-     />
+      permission="plone.AccessContent"
+      role="plone.Anonymous"
+      />
+
+   <permission
+      id="plone.NotAuthenticated"
+      title=""
+      />
+   <grant
+      permission="plone.NotAuthenticated"
+      role="plone.Anonymous"
+      />
+    <permission
+       id="plone.Authenticated"
+       title=""
+       />
+    <grant
+       permission="plone.Authenticated"
+       role="plone.Authenticated"
+       />
 
   <include package="plone.server" file="meta.zcml" />
   <plone:addon
