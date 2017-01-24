@@ -4,6 +4,7 @@ from plone.server.interfaces import IContainer
 from zope.interface import implementer
 from zope import schema
 from pserver.zodbusers import _
+from plone.server import configure
 
 
 class IGroupManager(IContainer):
@@ -23,7 +24,11 @@ class IGroup(IContainer):
     )
 
 
-@implementer(IGroup)
+@configure.contenttype(
+    portal_type="Group",
+    schema=IGroup,
+    add_permission="plone.AddGroup",
+    behaviors=["plone.server.behaviors.dublincore.IDublinCore"])
 class Group(Folder):
     name = None
     roles = []
@@ -45,5 +50,10 @@ class Group(Folder):
 
 
 @implementer(IGroupManager)
+@configure.contenttype(
+    portal_type="GroupManager",
+    schema=IGroupManager,
+    behaviors=["plone.server.behaviors.dublincore.IDublinCore"],
+    allowed_types=["Group"])
 class GroupManager(Folder):
     pass

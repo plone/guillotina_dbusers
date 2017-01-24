@@ -4,7 +4,7 @@ from plone.server.content import Folder
 from plone.server.interfaces import IContainer
 from pserver.zodbusers import _
 from zope import schema
-from zope.interface import implementer
+from plone.server import configure
 
 
 class IUserManager(IContainer):
@@ -47,7 +47,11 @@ class IUser(IContainer):
     )
 
 
-@implementer(IUser)
+@configure.contenttype(
+    portal_type="User",
+    schema=IUser,
+    add_permission="plone.AddUser",
+    behaviors=["plone.server.behaviors.dublincore.IDublinCore"])
 class User(Folder):
     username = email = name = password = None
     disabled = False
@@ -72,7 +76,11 @@ class User(Folder):
         return {}
 
 
-@implementer(IUserManager)
+@configure.contenttype(
+    portal_type="UserManager",
+    schema=IUserManager,
+    behaviors=["plone.server.behaviors.dublincore.IDublinCore"],
+    allowed_types=["User"])
 class UserManager(Folder):
     def __init__(self, id_=None):
         super().__init__(id_)

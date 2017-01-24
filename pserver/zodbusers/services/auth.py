@@ -1,14 +1,21 @@
 from datetime import datetime
 from datetime import timedelta
 from plone.server import app_settings
+from plone.server import configure
 from plone.server.api.service import Service
-from plone.server.browser import UnauthorizedResponse
-from plone.server.utils import get_authenticated_user
 from plone.server.auth.validators import SaltedHashPasswordValidator
+from plone.server.browser import UnauthorizedResponse
+from plone.server.interfaces import ISite
+from plone.server.utils import get_authenticated_user
 
 import jwt
 
 
+@configure.service(
+    context=ISite,
+    name="@login",
+    method="POST",
+    permission="plone.NotAuthenticated")
 class Login(Service):
     token_timeout = 60 * 60 * 1
 
@@ -35,6 +42,11 @@ class Login(Service):
         }
 
 
+@configure.service(
+    context=ISite,
+    name="@refresh_token",
+    method="POST",
+    permission="plone.Authenticated")
 class Refresh(Login):
     async def __call__(self):
         user = get_authenticated_user(self.request)

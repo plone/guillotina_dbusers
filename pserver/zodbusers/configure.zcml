@@ -2,43 +2,6 @@
            xmlns:plone="http://namespaces.plone.org/plone"
            i18n_domain="plone.server">
 
-   <include package="zope.securitypolicy" file="meta.zcml" />
-   <include package="zope.securitypolicy" />
-
-   <grant
-      permission="plone.AccessContent"
-      role="plone.Anonymous"
-      />
-
-   <permission
-      id="plone.NotAuthenticated"
-      title=""
-      />
-   <grant
-      permission="plone.NotAuthenticated"
-      role="plone.Anonymous"
-      />
-    <permission
-       id="plone.Authenticated"
-       title=""
-       />
-    <grant
-       permission="plone.Authenticated"
-       role="plone.Authenticated"
-       />
-
-  <include package="plone.server" file="meta.zcml" />
-  <plone:addon
-  		name="zodbusers"
-  		title="Plone ZODB Users"
-  		handler="pserver.zodbusers.install.ZODBUsersAddon" />
-
-  <plone:api file="api.json" />
-
-  <include file="content.zcml" />
-  <include file="permissions.zcml" />
-  <include file="services/configure.zcml" />
-
   <subscriber
       for="pserver.zodbusers.content.users.IUser
            plone.server.interfaces.IObjectFinallyCreatedEvent"

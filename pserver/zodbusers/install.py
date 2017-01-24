@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from plone.server import configure
 from plone.server.addons import Addon
 from plone.server.content import create_content_in_container
 from plone.server.registry import ILayers
@@ -8,6 +9,9 @@ from plone.server.utils import get_authenticated_user_id
 USERS_LAYER = 'pserver.zodbusers.interfaces.IZODBUsersLayer'
 
 
+@configure.addon(
+    name="zodbusers",
+    title="Plone ZODB Users")
 class ZODBUsersAddon(Addon):
 
     @classmethod
