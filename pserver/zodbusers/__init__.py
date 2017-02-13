@@ -26,3 +26,4 @@ def includeme(root, settings):
     configure.scan('pserver.zodbusers.content.groups')
     configure.scan('pserver.zodbusers.install')
     configure.scan('pserver.zodbusers.services')
+    configure.scan('pserver.zodbusers.subscribers')
