@@ -15,26 +15,26 @@ USERS_LAYER = 'pserver.zodbusers.interfaces.IZODBUsersLayer'
 class ZODBUsersAddon(Addon):
 
     @classmethod
-    def install(self, request):
+    def install(self, site, request):
         registry = request.site_settings
         registry.for_interface(ILayers).active_layers |= {
             USERS_LAYER
         }
         user = get_authenticated_user_id(request)
         create_content_in_container(
-            request.site, 'UserManager', 'users',
+            site, 'UserManager', 'users',
             creators=(user,), title='Users')
         create_content_in_container(
-            request.site, 'GroupManager', 'groups',
+            site, 'GroupManager', 'groups',
             creators=(user,), title='Groups')
 
     @classmethod
-    def uninstall(self, request):
+    def uninstall(self, site, request):
         registry = request.site_settings
         registry.for_interface(ILayers).active_layers -= {
             USERS_LAYER
         }
-        if 'users' in request.site:
-            del request.site['users']
-        if 'groups' in self.context:
-            del request.site['groups']
+        if 'users' in site:
+            del site['users']
+        if 'groups' in site:
+            del site['groups']
