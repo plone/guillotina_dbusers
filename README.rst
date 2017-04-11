@@ -3,7 +3,7 @@
 guillotina_dbusers
 ==================
 
-Provide users/groups from the database for guillotina.
+Store users/groups in the database for guillotina.
 
 
 Quickstart
