@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import json
-import base64
 from guillotina.tests.utils import get_container
+
+import base64
+import json
 
 
 async def test_add_user(dbusers_requester):
@@ -21,101 +22,107 @@ async def test_add_user(dbusers_requester):
         )
         assert status_code == 201
 
-        # required because portal object layer has is stale
         container = await get_container(requester)
-        assert await container.async_contains('foobar')
+        users = await container.async_get('users')
+        assert await users.async_contains('foobar')
 
-# def test_user_auth(self):
-#     self.layer.requester(
-#         'POST',
-#         '/db/guillotina/users',
-#         data=json.dumps({
-#             "@type": "User",
-#             "name": "Foobar",
-#             "id": "foobar",
-#             "username": "foobar",
-#             "email": "foo@bar.com",
-#             "password": "password"
-#         })
-#     )
-#     # user should be able to add content to object
-#     self.layer.requester(
-#         'POST',
-#         '/db/guillotina/users/foobar',
-#         data=json.dumps({
-#             "@type": "Item",
-#             "id": "foobar",
-#             "title": "foobar"
-#         }),
-#         token=base64.b64encode(b'foobar:password').decode('ascii')
-#     )
-#     site = self.get_portal()
-#     self.assertTrue('foobar' not in site['users']['foobar'])
-#
-# def test_login(self):
-#     # add user...
-#     self.layer.requester(
-#         'POST',
-#         '/db/guillotina/users',
-#         data=json.dumps({
-#             "@type": "User",
-#             "name": "Foobar",
-#             "id": "foobar",
-#             "username": "foobar",
-#             "email": "foo@bar.com",
-#             "password": "password",
-#             "groups": ["Managers"]
-#         })
-#     )
-#
-#     resp = self.layer.requester(
-#         'POST',
-#         '/db/guillotina/@login',
-#         data=json.dumps({
-#             "username": "foobar",
-#             "password": "password"
-#         })
-#     )
-#     self.assertEquals(resp.status_code, 200)
-#
-#     # test using new auth token
-#     resp = self.layer.requester(
-#         'GET', '/db/guillotina/@addons',
-#         token=json.loads(resp.content.decode('utf-8'))['token'],
-#         auth_type='Bearer'
-#     )
-#     assert resp.status_code == 200
-#
-# def test_refresh(self):
-#     # add user...
-#     self.layer.requester(
-#         'POST',
-#         '/db/guillotina/users',
-#         data=json.dumps({
-#             "@type": "User",
-#             "name": "Foobar",
-#             "id": "foobar",
-#             "username": "foobar",
-#             "email": "foo@bar.com",
-#             "password": "password",
-#             "groups": ["Managers"]
-#         })
-#     )
-#
-#     resp = self.layer.requester(
-#         'POST',
-#         '/db/guillotina/@login',
-#         data=json.dumps({
-#             "username": "foobar",
-#             "password": "password"
-#         })
-#     )
-#     self.assertEquals(resp.status_code, 200)
-#
-#     resp = self.layer.requester(
-#         'POST', '/db/guillotina/@refresh_token',
-#         token=json.loads(resp.content.decode('utf-8'))['token'],
-#         auth_type='Bearer'
-#     )
-#     assert resp.status_code == 200
-#     assert 'token' in json.loads(resp.content.decode('utf-8'))
+
+async def test_user_auth(dbusers_requester):
+    async with await dbusers_requester as requester:
+        await requester(
+            'POST',
+            '/db/guillotina/users',
+            data=json.dumps({
+                "@type": "User",
+                "name": "Foobar",
+                "id": "foobar",
+                "username": "foobar",
+                "email": "foo@bar.com",
+                "password": "password"
+            })
+        )
+        # user should be able to add content to object
+        resp, status_code = await requester(
+            'POST',
+            '/db/guillotina/users/foobar',
+            data=json.dumps({
+                "@type": "Item",
+                "id": "foobaritem",
+                "title": "foobar"
+            }),
+            token=base64.b64encode(b'foobar:password').decode('ascii')
+        )
+        container = await get_container(requester)
+        users = await container.async_get('users')
+        foobar = await users.async_get('foobar')
+        assert await foobar.async_contains('foobaritem')
+
+
+async def test_login(dbusers_requester):
+    async with await dbusers_requester as requester:
+        await requester(
+            'POST',
+            '/db/guillotina/users',
+            data=json.dumps({
+                "@type": "User",
+                "name": "Foobar",
+                "id": "foobar",
+                "username": "foobar",
+                "email": "foo@bar.com",
+                "password": "password",
+                "user_groups": ["Managers"]
+            })
+        )
+
+        resp, status_code = await requester(
+            'POST',
+            '/db/guillotina/@login',
+            data=json.dumps({
+                "username": "foobar",
+                "password": "password"
+            })
+        )
+        assert status_code == 200
+
+        # test using new auth token
+        resp, status_code = await requester(
+            'GET', '/db/guillotina/@addons',
+            token=resp['token'],
+            auth_type='Bearer'
+        )
+        assert status_code == 200
+
+
+async def test_refresh(dbusers_requester):
+    async with await dbusers_requester as requester:
+        await requester(
+            'POST',
+            '/db/guillotina/users',
+            data=json.dumps({
+                "@type": "User",
+                "name": "Foobar",
+                "id": "foobar",
+                "username": "foobar",
+                "email": "foo@bar.com",
+                "password": "password",
+                "user_groups": ["Managers"]
+            })
+        )
+
+        resp, status_code = await requester(
+            'POST',
+            '/db/guillotina/@login',
+            data=json.dumps({
+                "username": "foobar",
+                "password": "password"
+            })
+        )
+        assert status_code == 200
+
+        resp, status_code = await requester(
+            'POST', '/db/guillotina/@refresh_token',
+            token=resp['token'],
+            auth_type='Bearer'
+        )
+        assert status_code == 200
+        assert 'token' in resp

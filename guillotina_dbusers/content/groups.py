@@ -17,7 +17,7 @@ class IGroup(IFolder):
         title=_('Group name'),
         required=False)
 
-    roles = schema.List(
+    user_roles = schema.List(
         title=_('Roles'),
         value_type=schema.TextLine(),
         required=False
@@ -27,16 +27,16 @@ class IGroup(IFolder):
 @configure.contenttype(
     type_name="Group",
     schema=IGroup,
-    add_permission="guillotinaAddGroup",
+    add_permission="guillotina.AddGroup",
     behaviors=["guillotina.behaviors.dublincore.IDublinCore"])
 class Group(Folder):
     name = None
-    roles = []
+    user_roles = []
 
     @property
     def roles(self):
         roles = {}
-        for role in getattr(self, 'roles', []) or []:
+        for role in getattr(self, 'user_roles', []) or []:
             roles[role] = 1
         return roles
 

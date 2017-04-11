@@ -16,9 +16,9 @@ configure.grant(permission="guillotina.NotAuthenticated",
 configure.grant(permission="guillotina.Authenticated",
                 role="guillotina.Authenticated")
 configure.grant(permission="guillotina.AddUser",
-                role="guillotina.SiteAdmin")
+                role="guillotina.ContainerAdmin")
 configure.grant(permission="guillotina.AddGroup",
-                role="guillotina.SiteAdmin")
+                role="guillotina.ContainerAdmin")
 
 
 def includeme(root, settings):

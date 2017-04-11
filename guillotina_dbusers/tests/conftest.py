@@ -24,8 +24,9 @@ class DBUsersRequester(ContainerRequesterAsyncContextManager):
         await requester('POST', '/db/guillotina/@addons', data=json.dumps({
              "id": "zodbusers"
         }))
+        return requester
 
 
 @pytest.fixture(scope='function')
-async def dbusers_requester(guillotina, loop):
-    return DBUsersRequester(guillotina, loop)
+async def dbusers_requester(guillotina):
+    return DBUsersRequester(guillotina)

@@ -46,7 +46,7 @@ class Login(Service):
     context=IContainer,
     name="@refresh_token",
     method="POST",
-    permission="guillotinaAuthenticated")
+    permission="guillotina.Authenticated")
 class Refresh(Login):
     async def __call__(self):
         user = get_authenticated_user(self.request)

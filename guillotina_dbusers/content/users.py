@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
-from BTrees.OOBTree import OOBTree
 from guillotina.content import Folder
 from guillotina.interfaces import IFolder
 from guillotina_dbusers import _
 from guillotina import schema
 from guillotina import configure
+from guillotina.interfaces import Allow
 
 
 class IUserManager(IFolder):
@@ -29,13 +29,13 @@ class IUser(IFolder):
         title=_('Password'),
         required=False)
 
-    groups = schema.List(
+    user_groups = schema.List(
         title=_('Groups'),
         value_type=schema.TextLine(),
         required=False
     )
 
-    roles = schema.List(
+    user_roles = schema.List(
         title=_('Roles'),
         value_type=schema.TextLine(),
         required=False
@@ -50,26 +50,26 @@ class IUser(IFolder):
 @configure.contenttype(
     type_name="User",
     schema=IUser,
-    add_permission="guillotinaAddUser",
+    add_permission="guillotina.AddUser",
     behaviors=["guillotina.behaviors.dublincore.IDublinCore"])
 class User(Folder):
     username = email = name = password = None
     disabled = False
-    roles = ['guillotinaMember']
-    groups = []
+    user_roles = ['guillotinaMember']
+    user_groups = []
 
     @property
-    def _roles(self):
+    def roles(self):
         roles = {
-            'guillotinaAuthenticated': 1
+            'guillotina.Authenticated': 1
         }
-        for role in getattr(self, 'roles', []) or []:
-            roles[role] = 1
+        for role in getattr(self, 'user_roles', []) or []:
+            roles[role] = Allow
         return roles
 
     @property
-    def _groups(self):
-        return getattr(self, 'groups', []) or []
+    def groups(self):
+        return getattr(self, 'user_groups', []) or []
 
     @property
     def _properties(self):
@@ -82,6 +82,4 @@ class User(Folder):
     behaviors=["guillotina.behaviors.dublincore.IDublinCore"],
     allowed_types=["User"])
 class UserManager(Folder):
-    def __init__(self, id_=None):
-        super().__init__(id_)
-        self.username_mapping = OOBTree()
+    pass

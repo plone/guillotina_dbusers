@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from guillotina_dbusers.testing import PserverZODBUsersTestCase
+from guillotina.tests.utils import get_container
 
 
-class TestContent(PserverZODBUsersTestCase):
-
-    def test_content(self):
-        site = self.get_portal()
-        self.assertEqual(
-            site['users'].type_name, 'UserManager')
-        self.assertEqual(
-            site['groups'].type_name, 'GroupManager')
+async def test_content(dbusers_requester):
+    async with await dbusers_requester as requester:
+        container = await get_container(requester)
+        users = await container.async_get('users')
+        assert users.type_name == 'UserManager'
+        groups = await container.async_get('groups')
+        assert groups.type_name == 'GroupManager'

@@ -2,7 +2,7 @@ from guillotina import configure
 from guillotina.api.service import Service
 from guillotina.browser import Response
 from guillotina.interfaces import IContainer
-from guillotina.json.interfaces import IResourceSerializeToJson
+from guillotina.interfaces import IResourceSerializeToJson
 from guillotina.utils import get_authenticated_user
 from guillotina.component import queryMultiAdapter
 
@@ -11,7 +11,7 @@ from guillotina.component import queryMultiAdapter
     context=IContainer,
     name="@user_info",
     method="GET",
-    permission="guillotinaAuthenticated")
+    permission="guillotina.Authenticated")
 class Info(Service):
 
     async def __call__(self):
@@ -23,7 +23,7 @@ class Info(Service):
             data = {}
         data.update({
             'id': user.id,
-            'roles': user._roles,
-            'groups': getattr(user, '_groups', [])
+            'roles': user.roles,
+            'groups': getattr(user, 'groups', [])
         })
         return Response(data)

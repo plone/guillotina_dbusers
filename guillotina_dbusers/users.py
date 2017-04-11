@@ -11,7 +11,8 @@ class DBUserIdentifier(object):
         except (AttributeError, KeyError):
             return
 
-        if token.get('id', '') in await users.async_keys():
+        user_ids = await users.async_keys()
+        if token.get('id', '') in user_ids:
             user = await users.async_get(token.get('id', ''))
             if not user.disabled:
                 return user
