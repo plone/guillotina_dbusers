@@ -2,5 +2,5 @@
 from zope.interface import Interface
 
 
-class IZODBUsersLayer(Interface):
+class IDBUsersLayer(Interface):
     """Marker interface layer for zodb users"""

@@ -1,17 +1,17 @@
-from plone.server.api.service import Service
-from plone.server.browser import Response
-from plone.server.utils import get_authenticated_user
-from plone.server.json.interfaces import IResourceSerializeToJson
-from zope.component import queryMultiAdapter
-from plone.server import configure
-from plone.server.interfaces import ISite
+from guillotina import configure
+from guillotina.api.service import Service
+from guillotina.browser import Response
+from guillotina.interfaces import IContainer
+from guillotina.json.interfaces import IResourceSerializeToJson
+from guillotina.utils import get_authenticated_user
+from guillotina.component import queryMultiAdapter
 
 
 @configure.service(
-    context=ISite,
+    context=IContainer,
     name="@user_info",
     method="GET",
-    permission="plone.Authenticated")
+    permission="guillotinaAuthenticated")
 class Info(Service):
 
     async def __call__(self):

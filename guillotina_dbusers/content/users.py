@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
-from plone.server.content import Folder
-from plone.server.interfaces import IContainer
-from pserver.zodbusers import _
-from zope import schema
-from plone.server import configure
+from guillotina.content import Folder
+from guillotina.interfaces import IFolder
+from guillotina_dbusers import _
+from guillotina import schema
+from guillotina import configure
 
 
-class IUserManager(IContainer):
+class IUserManager(IFolder):
     pass
 
 
-class IUser(IContainer):
+class IUser(IFolder):
 
     username = schema.TextLine(
         title=_('Username'),
@@ -48,20 +48,20 @@ class IUser(IContainer):
 
 
 @configure.contenttype(
-    portal_type="User",
+    type_name="User",
     schema=IUser,
-    add_permission="plone.AddUser",
-    behaviors=["plone.server.behaviors.dublincore.IDublinCore"])
+    add_permission="guillotinaAddUser",
+    behaviors=["guillotina.behaviors.dublincore.IDublinCore"])
 class User(Folder):
     username = email = name = password = None
     disabled = False
-    roles = ['plone.Member']
+    roles = ['guillotinaMember']
     groups = []
 
     @property
     def _roles(self):
         roles = {
-            'plone.Authenticated': 1
+            'guillotinaAuthenticated': 1
         }
         for role in getattr(self, 'roles', []) or []:
             roles[role] = 1
@@ -77,9 +77,9 @@ class User(Folder):
 
 
 @configure.contenttype(
-    portal_type="UserManager",
+    type_name="UserManager",
     schema=IUserManager,
-    behaviors=["plone.server.behaviors.dublincore.IDublinCore"],
+    behaviors=["guillotina.behaviors.dublincore.IDublinCore"],
     allowed_types=["User"])
 class UserManager(Folder):
     def __init__(self, id_=None):

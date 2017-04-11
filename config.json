@@ -15,6 +15,6 @@
 	},
 	"utilities": [],
 	"auth_user_identifiers": [
-		"pserver.zodbusers.users.ZODBUserIdentifier"
+		"guillotina_dbusers.users.DBUserIdentifier"
 	]
 }

@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
-from plone.server.content import Folder
-from plone.server.interfaces import IContainer
+from guillotina import configure
+from guillotina import schema
+from guillotina.content import Folder
+from guillotina.interfaces import IFolder
+from guillotina_dbusers import _
 from zope.interface import implementer
-from zope import schema
-from pserver.zodbusers import _
-from plone.server import configure
 
 
-class IGroupManager(IContainer):
+class IGroupManager(IFolder):
     pass
 
 
-class IGroup(IContainer):
+class IGroup(IFolder):
 
     name = schema.TextLine(
         title=_('Group name'),
@@ -25,10 +25,10 @@ class IGroup(IContainer):
 
 
 @configure.contenttype(
-    portal_type="Group",
+    type_name="Group",
     schema=IGroup,
-    add_permission="plone.AddGroup",
-    behaviors=["plone.server.behaviors.dublincore.IDublinCore"])
+    add_permission="guillotinaAddGroup",
+    behaviors=["guillotina.behaviors.dublincore.IDublinCore"])
 class Group(Folder):
     name = None
     roles = []
@@ -51,9 +51,9 @@ class Group(Folder):
 
 @implementer(IGroupManager)
 @configure.contenttype(
-    portal_type="GroupManager",
+    type_name="GroupManager",
     schema=IGroupManager,
-    behaviors=["plone.server.behaviors.dublincore.IDublinCore"],
+    behaviors=["guillotina.behaviors.dublincore.IDublinCore"],
     allowed_types=["Group"])
 class GroupManager(Folder):
     pass

@@ -1,9 +1,9 @@
 .. contents::
 
-PSERVER.ZODBUSERS
-=================
+guillotina_dbusers
+==================
 
-Provide users/groups from zodb for pserver.
+Provide users/groups from the database for guillotina.
 
 
 Quickstart
@@ -11,6 +11,6 @@ Quickstart
 
 Install::
 
-  virtualenv-3.5 .
+  virtualenv-3.6 .
   ./bin/pip install zc.buildout
   ./bin/buildout
