@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
+from guillotina import configure, schema
 from guillotina.content import Folder
-from guillotina.interfaces import IFolder
+from guillotina.interfaces import Allow, IFolder
 from guillotina_dbusers import _
-from guillotina import schema
-from guillotina import configure
-from guillotina.interfaces import Allow
 
 
 class IUserManager(IFolder):
@@ -41,9 +39,21 @@ class IUser(IFolder):
         required=False
     )
 
+    user_permissions = schema.List(
+        title=_('Permissions'),
+        value_type=schema.TextLine(),
+        required=False,
+        default=[]
+    )
+
     disabled = schema.Bool(
         title=_('Disabled'),
         default=False
+    )
+
+    properties = schema.Dict(
+        required=False,
+        default={}
     )
 
 
@@ -55,17 +65,26 @@ class IUser(IFolder):
 class User(Folder):
     username = email = name = password = None
     disabled = False
-    user_roles = ['guillotinaMember']
+    user_roles = ['guillotina.Member']
     user_groups = []
+    user_permissions = {}
+    properties = {}
 
     @property
     def roles(self):
         roles = {
-            'guillotina.Authenticated': 1
+            'guillotina.Authenticated': Allow
         }
         for role in getattr(self, 'user_roles', []) or []:
             roles[role] = Allow
         return roles
+
+    @property
+    def permissions(self):
+        permissions = {}
+        for permission in getattr(self, 'user_permissions', []) or []:
+            permissions[permission] = Allow
+        return permissions
 
     @property
     def groups(self):

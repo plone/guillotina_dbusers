@@ -1,10 +1,9 @@
 from guillotina import configure
 from guillotina.api.service import Service
 from guillotina.browser import Response
-from guillotina.interfaces import IContainer
-from guillotina.interfaces import IResourceSerializeToJson
-from guillotina.utils import get_authenticated_user
 from guillotina.component import queryMultiAdapter
+from guillotina.interfaces import IContainer, IResourceSerializeToJson
+from guillotina.utils import get_authenticated_user
 
 
 @configure.service(
@@ -18,7 +17,7 @@ class Info(Service):
         user = get_authenticated_user(self.request)
         serializer = queryMultiAdapter((user, self.request), IResourceSerializeToJson)
         if serializer:
-            data = serializer()
+            data = await serializer()
         else:
             data = {}
         data.update({

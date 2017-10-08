@@ -1,7 +1,5 @@
-from datetime import datetime
-from datetime import timedelta
-from guillotina import app_settings
-from guillotina import configure
+from datetime import datetime, timedelta
+from guillotina import app_settings, configure
 from guillotina.api.service import Service
 from guillotina.auth.validators import SaltedHashPasswordValidator
 from guillotina.browser import UnauthorizedResponse

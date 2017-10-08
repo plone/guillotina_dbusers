@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
-from guillotina import configure
-from guillotina import schema
+from guillotina import configure, schema
 from guillotina.content import Folder
 from guillotina.interfaces import IFolder
 from guillotina_dbusers import _

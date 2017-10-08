@@ -5,14 +5,13 @@ from guillotina.content import create_content_in_container
 from guillotina.interfaces import ILayers
 from guillotina.utils import get_authenticated_user_id
 
-
 USERS_LAYER = 'guillotina_dbusers.interfaces.IDBUsersLayer'
 
 
 @configure.addon(
-    name="zodbusers",
-    title="Plone ZODB Users")
-class ZODBUsersAddon(Addon):
+    name="dbusers",
+    title="Guillotina DB Users")
+class DBUsersAddon(Addon):
 
     @classmethod
     async def install(self, site, request):

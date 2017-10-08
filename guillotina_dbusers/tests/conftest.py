@@ -22,7 +22,7 @@ class DBUsersRequester(ContainerRequesterAsyncContextManager):
     async def __aenter__(self):
         requester = await super().__aenter__()
         await requester('POST', '/db/guillotina/@addons', data=json.dumps({
-             "id": "zodbusers"
+             "id": "dbusers"
         }))
         return requester
 

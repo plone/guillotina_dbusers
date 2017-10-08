@@ -1,7 +1,11 @@
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix issues with user definition on latest guillotina
+  [vangheem]
+
+- Automatically configure
+  [vangheem]
 
 
 1.0.0 (2017-04-11)

@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
-from guillotina.i18n import MessageFactory
 from guillotina import configure
+from guillotina.i18n import MessageFactory
 
 _ = MessageFactory('guillotina_dbusers')
 
+
+app_settings = {
+    "auth_user_identifiers": [
+        "guillotina_dbusers.users.DBUserIdentifier"
+    ]
+}
 
 configure.permission("guillotina.NotAuthenticated", "")
 configure.permission("guillotina.Authenticated", "")
