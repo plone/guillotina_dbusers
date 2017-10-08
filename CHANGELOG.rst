@@ -1,4 +1,4 @@
-1.0.1 (unreleased)
+1.0.1 (2017-10-08)
 ------------------
 
 - Fix issues with user definition on latest guillotina
