@@ -2,8 +2,7 @@ from guillotina import configure
 from guillotina.auth.validators import hash_password
 from guillotina.event import notify
 from guillotina.events import NewUserAdded
-from guillotina.interfaces import IObjectAddedEvent, IPrincipalRoleManager
-from guillotina.utils import get_current_request
+from guillotina.interfaces import IObjectAddedEvent
 from guillotina_dbusers.content.users import IUser
 
 

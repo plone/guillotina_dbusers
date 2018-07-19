@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from guillotina import app_settings, configure
 from guillotina.api.service import Service
 from guillotina.auth.validators import SaltedHashPasswordValidator
-from guillotina.browser import UnauthorizedResponse
+from guillotina.response import HTTPUnauthorized
 from guillotina.interfaces import IContainer
 from guillotina.utils import get_authenticated_user
 
@@ -26,7 +26,9 @@ class Login(Service):
         validator = SaltedHashPasswordValidator(self.request)
         user = await validator.validate(creds)
         if user is None:
-            return UnauthorizedResponse('login failed')
+            return HTTPUnauthorized(content={
+                'reason': 'login failed'
+            })
 
         data = {
             'exp': datetime.utcnow() + timedelta(seconds=self.token_timeout),
@@ -49,7 +51,9 @@ class Refresh(Login):
     async def __call__(self):
         user = get_authenticated_user(self.request)
         if user is None:
-            return UnauthorizedResponse('user not authorized')
+            return HTTPUnauthorized(content={
+                'reason': 'user not authorized'
+            })
 
         data = {
             'exp': datetime.utcnow() + timedelta(seconds=self.token_timeout),

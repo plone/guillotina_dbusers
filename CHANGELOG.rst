@@ -1,7 +1,8 @@
-1.0.2 (unreleased)
+2.0.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Work with guillotina 4
+  [vangheem]
 
 
 1.0.1 (2017-10-08)

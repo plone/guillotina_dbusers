@@ -1,6 +1,5 @@
 from guillotina import configure
 from guillotina.api.service import Service
-from guillotina.browser import Response
 from guillotina.component import queryMultiAdapter
 from guillotina.interfaces import IContainer, IResourceSerializeToJson
 from guillotina.utils import get_authenticated_user
@@ -25,4 +24,4 @@ class Info(Service):
             'roles': user.roles,
             'groups': getattr(user, 'groups', [])
         })
-        return Response(data)
+        return data
