@@ -1,4 +1,4 @@
-2.0.0 (unreleased)
+2.0.0 (2018-07-19)
 ------------------
 
 - Work with guillotina 4
