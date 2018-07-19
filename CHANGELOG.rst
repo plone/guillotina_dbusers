@@ -1,7 +1,8 @@
 2.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Support both `username` and `login` as parameter for the `@login` endpoint
+  [ebrehault]
 
 
 2.0.0 (2018-07-19)

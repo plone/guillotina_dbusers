@@ -21,7 +21,7 @@ class Login(Service):
         data = await self.request.json()
         creds = {
             'token': data['password'],
-            'id': data['username']
+            'id': data.get('username', data.get('login'))
         }
         validator = SaltedHashPasswordValidator(self.request)
         user = await validator.validate(creds)
