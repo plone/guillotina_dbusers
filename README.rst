@@ -11,8 +11,7 @@ Installation
 
 - pip install guillotina_dbusers
 - add `guillotina_dbusers` to list of applications in your guillotina configuration
-- install into your container using the `@addons` endpoint
-
+- install into your container using the `@addons` endpoint using `dbusers` as id.
 
 Available content types:
 - User
