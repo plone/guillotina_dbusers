@@ -1,4 +1,4 @@
-2.0.2 (unreleased)
+2.0.2 (2018-09-25)
 ------------------
 
 - Remove login endpoint because guillotina already offers it
