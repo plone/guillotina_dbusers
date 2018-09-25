@@ -1,4 +1,3 @@
-from . import auth  # noqa
 from . import users  # noqa
 from guillotina import configure
 from guillotina.api.content import DefaultPOST
