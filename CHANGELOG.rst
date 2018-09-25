@@ -1,7 +1,8 @@
 2.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove login endpoint because guillotina already offers it
+  [bloodbare]
 
 
 2.0.1 (2018-07-19)
