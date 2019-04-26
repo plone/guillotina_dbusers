@@ -3,6 +3,7 @@ from guillotina import configure, schema
 from guillotina.content import Folder
 from guillotina.interfaces import Allow, IFolder
 from guillotina_dbusers import _
+from guillotina.directives import read_permission
 
 
 class IUserManager(IFolder):
@@ -23,6 +24,7 @@ class IUser(IFolder):
         title=_('Name'),
         required=False)
 
+    read_permission(password='guillotina.Nobody')
     password = schema.TextLine(
         title=_('Password'),
         required=False)

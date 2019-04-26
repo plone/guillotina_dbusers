@@ -33,3 +33,4 @@ def includeme(root, settings):
     configure.scan('guillotina_dbusers.install')
     configure.scan('guillotina_dbusers.services')
     configure.scan('guillotina_dbusers.subscribers')
+    configure.scan('guillotina_dbusers.permissions')
