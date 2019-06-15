@@ -1,20 +1,11 @@
 import json
 
-_user = {
-    "@type": "User",
-    "name": "Foobar",
-    "id": "foobar",
-    "username": "foobar",
-    "email": "foo@bar.com",
-    "password": "password",
-}
 
-
-async def test_get_users(dbusers_requester):
+async def test_get_users(dbusers_requester, user_data):
     async with dbusers_requester as requester:
         resp, status_code = await requester("GET", "/db/guillotina/users")
         resp, status_code = await requester(
-            "POST", "/db/guillotina/users", data=json.dumps(_user)
+            "POST", "/db/guillotina/users", data=json.dumps(user_data)
         )
         assert status_code == 201
         resp, status_code = await requester("GET", "/db/guillotina/@users")
@@ -28,11 +19,11 @@ async def test_get_users(dbusers_requester):
         assert resp["@name"] == "foobar"
 
 
-async def test_ensure_can_update_user_accounts(dbusers_requester):
+async def test_ensure_can_update_user_accounts(dbusers_requester, user_data):
     async with dbusers_requester as requester:
         resp, status_code = await requester("GET", "/db/guillotina/users")
         resp, status_code = await requester(
-            "POST", "/db/guillotina/users", data=json.dumps(_user)
+            "POST", "/db/guillotina/users", data=json.dumps(user_data)
         )
         assert status_code == 201
         data = {"email": "foobar2@foo.com", "roles": {"guillotina.Manager": True}}

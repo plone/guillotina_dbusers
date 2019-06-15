@@ -85,7 +85,6 @@ class PatchUser(BaseUser):
 class DeleteUser(BaseUser):
     async def __call__(self):
         user = await self.get_user()
-        alsoProvides(self.request, IPATCH)
         view = DefaultDELETE(user, self.request)
         return await view()
 

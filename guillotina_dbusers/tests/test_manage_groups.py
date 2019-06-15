@@ -1,3 +1,4 @@
+
 import json
 
 _group = {
@@ -8,7 +9,7 @@ _group = {
 }
 
 
-async def test_ensure_crud_groups(dbusers_requester):
+async def test_ensure_crud_groups(dbusers_requester, user_data):
     async with dbusers_requester as requester:
         resp, status_code = await requester(
             "POST", "/db/guillotina/groups", data=json.dumps(_group)
@@ -46,31 +47,45 @@ async def test_ensure_crud_groups(dbusers_requester):
         resp, status = await requester("GET", "/db/guillotina/@groups/foo")
         assert set(resp["roles"]) == set(["guillotina.Tester"])
 
-        data = {
-            "users": {
-                "foo": True,
-                "var": False,
-                "xxx": True
-            }
-        }
-        resp, status = await requester(
-            "PATCH", "/db/guillotina/@groups/foo", data=json.dumps(data)
+        # create the user
+        resp, status_code = await requester("GET", "/db/guillotina/users")
+        resp, status_code = await requester(
+            "POST", "/db/guillotina/users", data=json.dumps(user_data)
         )
-        assert status == 204
-        resp, status = await requester("GET", "/db/guillotina/@groups/foo")
-        assert set(resp["users"]["items"]) == set(["foo", "xxx"])
-        data = {
-            "users": {
-                "xxx": False
-            }
-        }
-        resp, status = await requester(
-            "PATCH", "/db/guillotina/@groups/foo", data=json.dumps(data)
-        )
-        assert status == 204
-        resp, status = await requester("GET", "/db/guillotina/@groups/foo")
-        assert set(resp["users"]["items"]) == set(["foo"])
 
+        data = {
+            "users": {
+                "foobar": True,
+            }
+        }
+        resp, status = await requester(
+            "PATCH", "/db/guillotina/@groups/foo", data=json.dumps(data)
+        )
+        assert status == 204
+        resp, status = await requester("GET", "/db/guillotina/@groups/foo")
+        assert set(resp["users"]["items"]) == set(["foobar"])
+        data = {
+            "users": {
+                "foobar": False
+            }
+        }
+        resp, status = await requester(
+            "PATCH", "/db/guillotina/@groups/foo", data=json.dumps(data)
+        )
+        assert status == 204
+        resp, status = await requester("GET", "/db/guillotina/@groups/foo")
+        assert len(resp["users"]["items"]) == 0
+
+        # ensure we cannot patch invalid users
+        data = {
+            "users": {
+                "foobarx": True
+            }
+        }
+        resp, status = await requester(
+            "PATCH", "/db/guillotina/@groups/foo", data=json.dumps(data)
+        )
+        assert status == 412
 
 
 

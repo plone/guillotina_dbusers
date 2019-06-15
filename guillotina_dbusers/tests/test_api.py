@@ -53,7 +53,6 @@ async def test_user_auth(dbusers_requester):
             token=base64.b64encode(b'foobar:password').decode('ascii'),
             auth_type="Basic"
         )
-        breakpoint()
         container = await get_container(requester)
         users = await container.async_get('users')
         foobar = await users.async_get('foobar')
@@ -122,7 +121,7 @@ async def test_refresh(dbusers_requester):
         assert status_code == 200
 
         resp, status_code = await requester(
-            'POST', '/db/guillotina/@refresh_token',
+            'POST', '/db/guillotina/@login-renew',
             token=resp['token'],
             auth_type='Bearer'
         )
