@@ -14,7 +14,7 @@ TESTING_SETTINGS.update({
 
 
 from guillotina.tests.conftest import *  # noqa
-from guillotina.tests.conftest import ContainerRequesterAsyncContextManager  # noqa
+from guillotina.tests.utils import ContainerRequesterAsyncContextManager  # noqa
 
 
 class DBUsersRequester(ContainerRequesterAsyncContextManager):
