@@ -41,10 +41,6 @@ class Group(Folder):
         return roles
 
     @property
-    def groups(self):
-        return []
-
-    @property
     def properties(self):
         return {}
 
