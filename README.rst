@@ -1,5 +1,3 @@
-.. contents::
-
 guillotina_dbusers
 ==================
 
@@ -21,15 +19,15 @@ Usage
 -----
 
 After installation, you will now have a `users` and `groups` folder inside
-your container.
+your container::
 
 
-POST /db/container/users {
-  "@type": "User",
-  "username": "foobar",
-  "email": "foo@bar.com",
-  "password": "foobar"
-}
+    POST /db/container/users {
+      "@type": "User",
+      "username": "foobar",
+      "email": "foo@bar.com",
+      "password": "foobar"
+    }
 
 
 You can now authenticate with the `foobar` user.
@@ -40,14 +38,14 @@ Login
 -----
 
 Besides using default authentication mechanisms, this package also provides
-a `@login` so you can work with jwt tokens.
+a `@login` so you can work with jwt tokens::
 
-POST /db/container/@login {
-  "username": "foobar",
-  "password": "foobar"
-}
+    POST /db/container/@login {
+      "username": "foobar",
+      "password": "foobar"
+    }
 
 
-And a `@refresh_token` endpoint:
+And a `@refresh_token` endpoint:L
 
     POST /db/container/@refresh_token
