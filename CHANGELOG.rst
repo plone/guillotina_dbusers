@@ -1,7 +1,7 @@
 2.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- bump
 
 
 2.0.4 (2019-06-18)
