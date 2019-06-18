@@ -1,7 +1,8 @@
 2.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- restrict g version
+  [vangheem]
 
 
 2.0.3 (2019-04-26)
