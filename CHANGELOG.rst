@@ -1,4 +1,4 @@
-2.0.4 (unreleased)
+2.0.4 (2019-06-18)
 ------------------
 
 - restrict g version
