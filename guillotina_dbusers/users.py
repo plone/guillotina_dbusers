@@ -1,10 +1,7 @@
 from guillotina.utils import get_current_container
 
 
-class DBUserIdentifier(object):
-
-    def __init__(self, request):
-        self.request = request
+class DBUserIdentifier:
 
     async def get_user(self, token):
         try:
