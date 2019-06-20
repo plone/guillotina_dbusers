@@ -3,7 +3,7 @@ from guillotina import configure
 from guillotina.addons import Addon
 from guillotina.content import create_content_in_container
 from guillotina.interfaces import ILayers
-from guillotina.utils import get_authenticated_user_id
+from guillotina.utils import get_authenticated_user_id, get_registry
 
 USERS_LAYER = 'guillotina_dbusers.interfaces.IDBUsersLayer'
 
@@ -15,11 +15,11 @@ class DBUsersAddon(Addon):
 
     @classmethod
     async def install(self, site, request):
-        registry = request.container_settings
+        registry = await get_registry()
         registry.for_interface(ILayers)['active_layers'] |= {
             USERS_LAYER
         }
-        user = get_authenticated_user_id(request)
+        user = get_authenticated_user_id()
         await create_content_in_container(
             site, 'UserManager', 'users',
             creators=(user,), title='Users')
@@ -29,7 +29,7 @@ class DBUsersAddon(Addon):
 
     @classmethod
     async def uninstall(self, site, request):
-        registry = request.container_settings
+        registry = await get_registry()
         registry.for_interface(ILayers)['active_layers'] -= {
             USERS_LAYER
         }

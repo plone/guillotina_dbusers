@@ -1,7 +1,10 @@
-2.0.4 (unreleased)
+2.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Guillotina > 5 only
+
+- Update API to be compat with plone api
+  [jordic]
 
 
 2.0.3 (2019-04-26)
