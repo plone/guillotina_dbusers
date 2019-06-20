@@ -1,9 +1,7 @@
 from guillotina import configure
 from guillotina.api.service import Service
 from guillotina.component import get_multi_adapter
-from guillotina.component import query_utility
 from guillotina.component import queryMultiAdapter
-from guillotina.interfaces import ICatalogUtility
 from guillotina.interfaces import IContainer
 from guillotina.interfaces import IPATCH
 from guillotina.interfaces import IResourceSerializeToJson
@@ -14,7 +12,6 @@ from guillotina.utils import navigate_to
 from zope.interface import alsoProvides
 from guillotina.api.content import DefaultPATCH
 from guillotina.api.content import DefaultDELETE
-from ..utils import is_default_catalog
 
 
 @configure.service(
@@ -95,11 +92,7 @@ class DeleteUser(BaseUser):
 )
 class ManageAvailableUsers(Service):
     async def __call__(self):
-        catalog = query_utility(ICatalogUtility)
-        if is_default_catalog(catalog):
-            users = await self.get_users_form_folder()
-        else:
-            users = await catalog.get_by_type(self.context, "User")
+        users = await self.get_users_form_folder()
         if not users:
             return []
         result = []
