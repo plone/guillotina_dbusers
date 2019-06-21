@@ -1,7 +1,8 @@
 5.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix dbusers causing errors when authenticating against non-container context
+  [vangheem]
 
 
 5.0.0 (2019-06-21)
