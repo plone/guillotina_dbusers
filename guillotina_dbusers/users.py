@@ -1,3 +1,4 @@
+from guillotina.exceptions import ContainerNotFound
 from guillotina.utils import get_current_container
 
 
@@ -7,7 +8,7 @@ class DBUserIdentifier:
         try:
             container = get_current_container()
             users = await container.async_get('users')
-        except (AttributeError, KeyError):
+        except (AttributeError, KeyError, ContainerNotFound):
             return
 
         user_ids = await users.async_keys()
