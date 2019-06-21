@@ -1,4 +1,4 @@
-5.0.1 (unreleased)
+5.0.1 (2019-06-21)
 ------------------
 
 - Fix dbusers causing errors when authenticating against non-container context
