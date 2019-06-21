@@ -12,14 +12,14 @@ class IGroupManager(IFolder):
 
 class IGroup(IFolder):
 
-    name = schema.TextLine(
-        title=_('Group name'),
-        required=False)
-
+    name = schema.TextLine(title=_("Group name"), required=False)
+    description = schema.TextLine(title=_("Group Description"), required=False)
     user_roles = schema.List(
-        title=_('Roles'),
-        value_type=schema.TextLine(),
-        required=False
+        title=_("Roles"), value_type=schema.TextLine(), required=False
+    )
+    users = schema.List(
+        title=_("Users"), value_type=schema.TextLine(), required=False,
+        default=[]
     )
 
 
@@ -27,7 +27,8 @@ class IGroup(IFolder):
     type_name="Group",
     schema=IGroup,
     add_permission="guillotina.AddGroup",
-    behaviors=["guillotina.behaviors.dublincore.IDublinCore"])
+    behaviors=["guillotina.behaviors.dublincore.IDublinCore"],
+)
 class Group(Folder):
     name = None
     user_roles = []
@@ -35,13 +36,9 @@ class Group(Folder):
     @property
     def roles(self):
         roles = {}
-        for role in getattr(self, 'user_roles', []) or []:
+        for role in getattr(self, "user_roles", []) or []:
             roles[role] = 1
         return roles
-
-    @property
-    def groups(self):
-        return []
 
     @property
     def properties(self):
@@ -53,6 +50,7 @@ class Group(Folder):
     type_name="GroupManager",
     schema=IGroupManager,
     behaviors=["guillotina.behaviors.dublincore.IDublinCore"],
-    allowed_types=["Group"])
+    allowed_types=["Group"],
+)
 class GroupManager(Folder):
     pass

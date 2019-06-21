@@ -6,7 +6,7 @@ import json
 
 
 async def test_add_user(dbusers_requester):
-    async with await dbusers_requester as requester:
+    async with dbusers_requester as requester:
         resp, status_code = await requester('GET', '/db/guillotina/users')
         resp, status_code = await requester(
             'POST',
@@ -28,7 +28,7 @@ async def test_add_user(dbusers_requester):
 
 
 async def test_user_auth(dbusers_requester):
-    async with await dbusers_requester as requester:
+    async with dbusers_requester as requester:
         await requester(
             'POST',
             '/db/guillotina/users',
@@ -50,7 +50,8 @@ async def test_user_auth(dbusers_requester):
                 "id": "foobaritem",
                 "title": "foobar"
             }),
-            token=base64.b64encode(b'foobar:password').decode('ascii')
+            token=base64.b64encode(b'foobar:password').decode('ascii'),
+            auth_type="Basic"
         )
         container = await get_container(requester)
         users = await container.async_get('users')
@@ -59,7 +60,7 @@ async def test_user_auth(dbusers_requester):
 
 
 async def test_login(dbusers_requester):
-    async with await dbusers_requester as requester:
+    async with dbusers_requester as requester:
         await requester(
             'POST',
             '/db/guillotina/users',
@@ -94,7 +95,7 @@ async def test_login(dbusers_requester):
 
 
 async def test_refresh(dbusers_requester):
-    async with await dbusers_requester as requester:
+    async with dbusers_requester as requester:
         await requester(
             'POST',
             '/db/guillotina/users',
@@ -120,7 +121,7 @@ async def test_refresh(dbusers_requester):
         assert status_code == 200
 
         resp, status_code = await requester(
-            'POST', '/db/guillotina/@refresh_token',
+            'POST', '/db/guillotina/@login-renew',
             token=resp['token'],
             auth_type='Bearer'
         )
