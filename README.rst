@@ -1,6 +1,8 @@
 guillotina_dbusers
 ==================
 
+**[DEPRECATED]**: dbusers has been integrated in the main guillotina repository: https://github.com/plone/guillotina/pull/566
+
 Store users/groups in the database for guillotina.
 
 
